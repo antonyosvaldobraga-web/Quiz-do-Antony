@@ -1,5 +1,5 @@
 /**
- * Quiz do Antony - Game Logic
+ * Quiz de tocedor raiz - Game Logic
  */
 
 const canvas = document.getElementById('gameCanvas');
