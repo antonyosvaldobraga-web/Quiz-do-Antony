@@ -27,6 +27,7 @@ const loginScreen = document.getElementById('login-screen');
 const loginUsernameInput = document.getElementById('login-username');
 const loginPasswordInput = document.getElementById('login-password');
 const loginBtn = document.getElementById('login-btn');
+const registerBtn = document.getElementById('register-btn');
 const togglePasswordBtn = document.getElementById('toggle-password');
 
 const startBtn = document.getElementById('start-btn');
@@ -351,8 +352,10 @@ function saveUser(username, password) {
 function checkLoginInputs() {
     if (loginUsernameInput.value.trim().length > 0 && loginPasswordInput.value.trim().length > 0) {
         loginBtn.disabled = false;
+        if (registerBtn) registerBtn.disabled = false; // Enable register button too if inputs are valid
     } else {
         loginBtn.disabled = true;
+        if (registerBtn) registerBtn.disabled = true;
     }
 }
 
@@ -376,11 +379,26 @@ function performLogin() {
             alert('Senha incorreta.');
         }
     } else {
-        // User does not exist, create new
+        // User does not exist
+        alert('Usuário não encontrado. Por favor, cadastre-se primeiro.');
+    }
+}
+
+function performRegister() {
+    const username = loginUsernameInput.value.trim();
+    const password = loginPasswordInput.value.trim();
+
+    if (!username || !password) return;
+
+    const users = getUsers();
+
+    if (users[username]) {
+        alert('Usuário já existe. Tente fazer login.');
+    } else {
         saveUser(username, password);
         currentUser = username;
+        alert('Usuário cadastrado com sucesso!');
         successLogin();
-        alert('Usuário criado e logado!');
     }
 }
 
@@ -394,6 +412,7 @@ function successLogin() {
 
 
 loginBtn.addEventListener('click', performLogin);
+if (registerBtn) registerBtn.addEventListener('click', performRegister);
 
 // Toggle Password Visibility
 togglePasswordBtn.addEventListener('click', () => {
