@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz do Antony</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- Tela de Login -->
+        <div id="login-screen" class="overlay active">
+            <div class="glass-card">
+                <h1>Bem-vindo</h1>
+                <p>Identifique-se para jogar</p>
+                <input type="text" id="login-username" placeholder="Usuário" autocomplete="off">
+                <div class="password-container">
+                    <input type="password" id="login-password" placeholder="Senha">
+                    <button id="toggle-password" type="button" tabindex="-1">
+                        <!-- Eye Icon (SVG) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </button>
+                </div>
+                <button id="login-btn" class="primary-btn" disabled>Entrar</button>
+            </div>
+        </div>
+
+        <!-- Menu Principal -->
+        <div id="main-menu" class="overlay hidden">
+            <div class="glass-card">
+                <h1>Quiz do Antony</h1>
+                <p>Teste seus conhecimentos com desafios crescentes!</p>
+                <button id="start-btn" class="primary-btn">Começar Jogo</button>
+            </div>
+        </div>
+
+        <!-- HUD (Heads-Up Display) -->
+        <div id="hud" class="hidden">
+            <div class="hud-top">
+                <div class="score-container">
+                    <span class="label">Pontos:</span>
+                    <span id="score-value">0</span>
+                </div>
+                <div class="timer-container">
+                    <div id="timer-bar"></div>
+                </div>
+            </div>
+
+            <div id="question-card" class="glass-card">
+                <h2 id="question-text">Carregando pergunta...</h2>
+                <div id="options-container">
+                    <!-- Botões de opção serão inserção via JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Tela de Game Over -->
+        <div id="game-over" class="overlay hidden">
+            <div class="glass-card">
+                <h1>Fim de Jogo!</h1>
+                <p>Sua pontuação final foi:</p>
+                <div id="final-score">0</div>
+
+                <input type="text" id="player-name" placeholder="Seu nome" maxlength="15" autocomplete="off">
+                <button id="submit-score-btn" class="primary-btn">Salvar Pontuação</button>
+
+                <button id="restart-btn" class="secondary-btn">Tentar Novamente</button>
+                <button id="show-leaderboard-btn" class="secondary-btn" style="margin-top: 10px;">Ver Ranking</button>
+            </div>
+        </div>
+
+        <!-- Ranking Overlay -->
+        <div id="leaderboard" class="overlay hidden">
+            <div class="glass-card">
+                <h1>Top 10 Jogadores</h1>
+                <div class="leaderboard-container">
+                    <ul id="score-list">
+                        <!-- Scores inserted here -->
+                    </ul>
+                </div>
+                <button id="close-leaderboard-btn" class="secondary-btn">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+
+</html>

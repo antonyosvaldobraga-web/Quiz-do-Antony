@@ -1,0 +1,348 @@
+:root {
+    --primary: #6366f1;
+    --primary-hover: #4f46e5;
+    --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --text: #f8fafc;
+    --text-muted: #94a3b8;
+    --correct: #22c55e;
+    --incorrect: #ef4444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+}
+
+body {
+    background: var(--bg-gradient);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: var(--text);
+}
+
+#game-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    backdrop-filter: blur(8px);
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.glass-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px);
+    padding: 3rem;
+    border-radius: 2rem;
+    text-align: center;
+    max-width: 90%;
+    width: 500px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    background: linear-gradient(to right, #818cf8, #c084fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+p {
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+    font-size: 1.1rem;
+}
+
+.primary-btn,
+.secondary-btn,
+.option-btn {
+    cursor: pointer;
+    border: none;
+    border-radius: 1rem;
+    padding: 1.25rem 2.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.primary-btn {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.4);
+}
+
+.primary-btn:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 20px 25px -5px rgba(99, 102, 241, 0.5);
+}
+
+.secondary-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.secondary-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+#hud {
+    position: absolute;
+    width: 100%;
+    max-width: 800px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    z-index: 5;
+    justify-content: center;
+}
+
+.hud-top {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.score-container {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.score-container .label {
+    color: var(--text-muted);
+}
+
+.timer-container {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+#timer-bar {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(to right, #22c55e, #eab308, #ef4444);
+    transition: width 0.1s linear;
+}
+
+#question-card {
+    width: 100%;
+    margin: 0 auto;
+}
+
+#question-text {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    min-height: 4.5rem;
+}
+
+#options-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.option-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    color: var(--text);
+    padding: 1rem;
+    text-align: left;
+    height: auto;
+    font-size: 1.1rem;
+}
+
+.option-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.02);
+}
+
+.option-btn.correct {
+    background: var(--correct);
+    border-color: var(--correct);
+}
+
+.option-btn.incorrect {
+    background: var(--incorrect);
+    border-color: var(--incorrect);
+}
+
+#final-score {
+    font-size: 5rem;
+    font-weight: 800;
+    margin: 1.5rem 0;
+    color: var(--primary);
+}
+
+@media (max-width: 640px) {
+    #options-container {
+        grid-template-columns: 1fr;
+    }
+
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    #question-text {
+        font-size: 1.4rem;
+    }
+
+    .glass-card {
+        padding: 1.5rem;
+    }
+}
+
+/* Leaderboard & Input Styles */
+.password-container {
+    position: relative;
+    width: 100%;
+}
+
+#player-name,
+#login-username,
+#login-password {
+    width: 100%;
+    padding: 1rem;
+    padding-right: 3rem;
+    /* Space for the eye icon */
+    margin-bottom: 1rem;
+    border-radius: 0.8rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    color: var(--text);
+    font-size: 1.1rem;
+    text-align: center;
+    outline: none;
+}
+
+#toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    /* Center vertically relative to container line-height/height issues might occur, but 'top: 28px' usually works for input height */
+    /* Adjusting top to match input height. Input has ~22px height + 2rem padding + 2px border ~ 56px total. */
+    top: 28px;
+    transform: translateY(-50%) translateY(-0.5rem);
+    /* Adjust for margin-bottom of input */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    padding: 0;
+    width: auto;
+    box-shadow: none;
+    transition: color 0.2s;
+}
+
+#toggle-password:hover {
+    color: var(--primary);
+    transform: translateY(-50%) translateY(-0.5rem) scale(1.1);
+}
+
+#player-name:focus,
+#login-username:focus,
+#login-password:focus {
+    border-color: var(--primary);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #4b5563;
+    /* gray-600 */
+    box-shadow: none;
+}
+
+.leaderboard-container {
+    margin-bottom: 2rem;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+#score-list {
+    list-style: none;
+    text-align: left;
+}
+
+#score-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.8rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 1.1rem;
+}
+
+#score-list li:last-child {
+    border-bottom: none;
+}
+
+#score-list li span:nth-child(1) {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+#score-list li span:nth-child(2) {
+    font-weight: 300;
+    color: var(--text-muted);
+}
